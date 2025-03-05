@@ -32,8 +32,8 @@ public class NotificationController {
 
 
     @Operation(
-            summary = "getNotifications",
-            description = "Returns unread notifications",
+            summary = "get notification by Id",
+            description = "Returns notification ",
             tags = {"Notifications"})
     @GetMapping(value = "{id}")
     public ResponseEntity<NotificationResponse> getNotificationById(@PathVariable Long id) {
@@ -41,7 +41,7 @@ public class NotificationController {
     }
 
     @Operation(
-            summary = "deleteNotification",
+            summary = "delete Notification",
             description = "delete notifications",
             tags = {"Notifications"})
     @DeleteMapping(value = "{id}")
@@ -52,8 +52,8 @@ public class NotificationController {
 
 
     @Operation(
-            summary = "getNotificationsByUserId",
-            description = "returns user notification",
+            summary = "get Notifications",
+            description = "return notifications",
             tags = {"Notifications"})
     @GetMapping(value = "")
     public ResponseEntity<List<NotificationResponse>> getNotifications(

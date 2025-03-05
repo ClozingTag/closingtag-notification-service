@@ -1,7 +1,6 @@
 package com.clozingtag.clozingtag.notification.service.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,7 +21,7 @@ public class NotificationEntity  {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String userId;
+  private Long userId;
 
   private String name;
 

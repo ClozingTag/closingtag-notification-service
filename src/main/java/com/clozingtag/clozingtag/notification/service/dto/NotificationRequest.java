@@ -8,7 +8,7 @@ import java.util.Map;
 @Data
 @Builder
 public class NotificationRequest {
-    private String userId;
+    private Long userId;
     private String name;
     private String email;
     private String subject;
