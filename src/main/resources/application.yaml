@@ -1,0 +1,115 @@
+server:
+  port: 8184
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: clozingtag-notification-service
+  profiles:
+    active: dev #default
+  #  cloud:
+  #    config:
+  #      uri: ${CONFIG_SERVER:http://localhost:8888}
+  #      username: ${CONFIG_USER:clozing_tag_user}
+  #      password: ${CONFIG_PASS:clozingt_ag_pass}
+  #      discovery:
+  #        enabled: true
+  #        service-id: clozingtag-config-service
+  #      fail-fast: true
+  #      retry:
+  #        initial-interval: 1000
+  #        multiplier: 1.5
+  #        max-attempts: 10000
+  #        max-interval: 1500
+  #      enabled: true
+  jpa:
+    hibernate.ddl-auto: update
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: true
+    database-platform: org.hibernate.dialect.PostgresPlusDialect
+    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:ct_notification_service_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:root}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 5
+      initialization-fail-timeout: 0
+  mail:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${AUTH_SERVER_URL:http://localhost:8181/api/auth/oauth2/jwks}
+  main:
+    allow-bean-definition-overriding: true
+
+notification:
+  msg: "Welcome to ClozingTag Notification Application"
+  build-version: 1.0.0
+  base-url: ${BASE_URL:http://localhost:8181}
+
+
+info:
+  app:
+    name: Notification MicroService
+    description: ClozingTag Notification Application
+    version: 1.0.0
+
+management:
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+
+
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){blue} %clr(%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]){yellow} %clr(:){red} %clr(%m){faint}%n"
+  level:
+    com.clozingtag.clozingtag.notification.service: DEBUG
+
+
+openapi:
+  service:
+    title: ClozingTag Notification Service Docs
+    version: 1.0.0
+    url: ${GATEWAY_URL:http://localhost:8181/api/notification} #api gateway url
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:8761/eureka/}
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${server.port}
