@@ -58,8 +58,17 @@ notification:
   msg: "Welcome to ClozingTag Notification Application"
   build-version: 1.0.0
   base-url: ${BASE_URL:http://localhost:8181}
-
-
+  mailjet:
+    api:
+      key: 3a09e02a33bd33dxy
+      secret: 8a83d199xyz
+    sender:
+      email: support@clozingtag.com
+      name: ClozingTag
+    templates:
+      creation: 6771023
+      deletion: 6771005
+      update: 6771006
 info:
   app:
     name: Notification MicroService

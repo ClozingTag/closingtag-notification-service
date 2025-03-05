@@ -17,6 +17,8 @@ public class AppConfiguration {
 
   private String baseUrl;
 
+  private MailJetConfig mailjet;
+
 
   @Data
   public static class MailJetConfig {
