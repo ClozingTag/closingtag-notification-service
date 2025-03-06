@@ -30,7 +30,6 @@ public class NotificationController {
         return ResponseEntity.noContent().build();
     }
 
-
     @Operation(
             summary = "get notification by Id",
             description = "Returns notification ",
