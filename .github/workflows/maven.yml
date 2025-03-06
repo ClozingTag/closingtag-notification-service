@@ -53,6 +53,8 @@ jobs:
           git add k8s/clozingtag-notification-service-deployment.yaml
           git commit -m "Update deployment YAML with SHA ${GITHUB_SHA}"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Simulate Deployment
         run: |
