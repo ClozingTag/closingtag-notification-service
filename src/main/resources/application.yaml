@@ -101,7 +101,6 @@ logging:
   level:
     com.clozingtag.clozingtag.notification.service: DEBUG
 
-
 openapi:
   service:
     title: ClozingTag Notification Service Docs

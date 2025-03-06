@@ -11,12 +11,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
-//          @Bean
-//          public JwtDecoder jwtDecoder() {
-//              return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
-//          }
-
-
   @Bean
   public SecurityFilterChain rsSecurityFilterChain(HttpSecurity http) throws Exception {
 
