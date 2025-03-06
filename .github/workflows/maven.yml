@@ -46,15 +46,17 @@ jobs:
           sed -i 's|<IMAGE>|${{ env.IMAGE_NAME }}/clozingtag-notification-service:'${TAG}'|' k8s/clozingtag-notification-service-deployment.yaml
 
       - name: Commit updated deployment file
-        if: ${{ github.actor != 'github-actions' }}  # Skip if the commit is from GitHub Actions bot
+        if: ${{ github.actor != 'github-actions' }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://github.com/${{ github.repository }}.git
           git add k8s/clozingtag-notification-service-deployment.yaml
           git commit -m "Update deployment YAML with SHA ${GITHUB_SHA}"
-          git push
+          git push https://github.com/${{ github.repository }} HEAD:main --force
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
 
       - name: Simulate Deployment
         run: |
