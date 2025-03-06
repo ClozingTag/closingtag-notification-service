@@ -1,67 +1,68 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: closingtag-notification-service-db-configmap
+  name: clozingtag-notification-service-db-configmap
 data:
-  db-host: "closingtag-notification-service-db-svc"
-  db-name: "ct_device_service_db"
+  db-host: "clozingtag-notification-service-db-svc"
+  db-name: "ct_notification_service_db"
   db-port: "5432"
+
 
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: closingtag-notification-service-db-secret
+  name: clozingtag-notification-service-db-secret
 data:
-  db-user: "cG9zdGdyZXM="  # postgres
-  db-pass: "cm9vdA=="  # root
-
+  db-user: "cG9zdGdyZXM="
+  db-pass: "cm9vdA=="
 type: Opaque
 
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: closingtag-notification-service-db-pv
+  name: clozingtag-notification-service-db-pv
 spec:
-  storageClassName: manual
+  storageClassName: do-block-storage #manual
   capacity:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: "/mnt/data"
+    path: /mnt/pf/notification/postgres
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: closingtag-notification-service-db-pvc
+  name: clozingtag-notification-service-db-pvc
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi
 
+
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: closingtag-notification-service-db-deployment
+  name: clozingtag-notification-service-db-deployment
 spec:
   selector:
     matchLabels:
-      app: closingtag-notification-service-db
+      app: clozingtag-notification-service-db-deployment
   replicas: 1
   template:
     metadata:
       labels:
-        app: closingtag-notification-service-db
+        app: clozingtag-notification-service-db-deployment
     spec:
       containers:
-        - name: postgres
+        - name: clozingtag-notification-service-db-deployment
           image: postgres:latest
           imagePullPolicy: IfNotPresent
           resources:
@@ -77,36 +78,37 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: closingtag-notification-service-db-secret
+                  name: clozingtag-notification-service-db-secret
                   key: db-user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: closingtag-notification-service-db-secret
+                  name: clozingtag-notification-service-db-secret
                   key: db-pass
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: closingtag-notification-service-db-configmap
+                  name: clozingtag-notification-service-db-configmap
                   key: db-name
           volumeMounts:
-            - name: db-data
+            - name: clozingtag-notification-service-db-data
               mountPath: "/var/lib/postgresql/data"
       volumes:
-        - name: db-data
+        - name: clozingtag-notification-service-db-data
           persistentVolumeClaim:
-            claimName: closingtag-notification-service-db-pvc
+            claimName: clozingtag-notification-service-db-pvc
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: closingtag-notification-service-db-svc
+  name: clozingtag-notification-service-db-svc
 spec:
   selector:
-    app: closingtag-notification-service-db
+    app: clozingtag-notification-service-db-deployment
   ports:
-    - protocol: TCP
+    - protocol: "TCP"
+      name: "clozingtag-notification-service-db-svc"
       port: 5432
       targetPort: 5432
   type: ClusterIP

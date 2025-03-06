@@ -8,7 +8,7 @@ spring:
   application:
     name: clozingtag-notification-service
   profiles:
-    active: dev #default
+    active: default
   #  cloud:
   #    config:
   #      uri: ${CONFIG_SERVER:http://localhost:8888}
@@ -106,7 +106,7 @@ openapi:
   service:
     title: ClozingTag Notification Service Docs
     version: 1.0.0
-    url: ${GATEWAY_URL:http://localhost:8181/api/notification} #api gateway url
+    url: ${OPENAPI_GATEWAY_URL:http://localhost:8181/api/notification} #api gateway url https://live.clozingtag.come/api/notification
 springdoc:
   api-docs:
     path: /v3/api-docs
