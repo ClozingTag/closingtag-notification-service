@@ -7,7 +7,6 @@ data:
   openapi-gateway-url: "http://localhost:8181/api/notification" #  "https://live.clozingtag.com/api/notification"
   base-url: "http://clozingtag-gateway-service-svc:8181" # https://live.clozingtag.com
 
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -91,6 +90,7 @@ spec:
             - containerPort: 8184
               protocol: TCP
           resources: {}
+
 ---
 apiVersion: v1
 kind: Service
