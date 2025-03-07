@@ -90,7 +90,6 @@ spec:
             - containerPort: 8184
               protocol: TCP
           resources: {}
-
 ---
 apiVersion: v1
 kind: Service
