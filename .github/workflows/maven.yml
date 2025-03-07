@@ -3,13 +3,8 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "main" ]
-    # Prevents the action from triggering if changes are only made to the deployment YAML file
-    paths-ignore:
-      - 'k8s/clozingtag-notification-service-deployment.yaml'
   pull_request:
     branches: [ "main" ]
-    paths-ignore:
-      - 'k8s/clozingtag-notification-service-deployment.yaml'
 
 env:
   IMAGE_NAME: ghcr.io/clozingtag
