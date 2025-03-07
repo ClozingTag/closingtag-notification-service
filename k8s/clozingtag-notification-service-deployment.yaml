@@ -83,7 +83,7 @@ spec:
                 secretKeyRef:
                   name: clozingtag-notification-service-db-secret
                   key: db-pass
-          image: <IMAGE>  #to be updated by the workflow
+          image: ghcr.io/clozingtag/clozingtag-notification-service:8be0a41  #to be updated by the workflow
           imagePullPolicy: IfNotPresent
           name: clozingtag-notification-service
           ports:
